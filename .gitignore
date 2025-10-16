@@ -1,0 +1,11 @@
+# Ignore INDEX.csv files (branch-specific)
+/INDEX.csv
+docs/INDEX.csv
+
+# Ignore subdirectories
+*/
+
+# Include specific subdirectories
+!.vscode/
+!docs/
+!scripts/

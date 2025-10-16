@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+
+# Environment setup
+# -----------------------------------------------------------------------------
+set -o pipefail
+[[ ${DEBUG-} ]] && set -o xtrace
+SCRIPT_DIR="$(cd "${BASH_SOURCE[0]%/*}" || exit 1; pwd)"
+REFERENCE_DIR="$(dirname "${SCRIPT_DIR}")"
+source "${SCRIPT_DIR}/lib.sh"
+
+function print_usage() {
+  cat <<EOF
+Usage: $(basename "$0")
+
+Updates all git repositories in the reference documentation directory.
+
+This script recursively finds all git repositories under ${REFERENCE_DIR}
+and performs a git pull on each one. Works with both standard and sparse checkouts.
+
+Dependencies:
+  git                Git version control system
+  fd                 Fast file finder (alternative to find)
+
+Optional arguments:
+  -h, --help         Show this help message and exit
+EOF
+}
+if [[ "${1-}" == "-h" || "${1-}" == "--help" ]]; then
+  print_usage
+  exit 0
+fi
+
+function ctrlc_trap() {
+  log_newline
+  log_warning "Script interrupted. Exiting."
+  exit 130
+}
+trap ctrlc_trap SIGINT
+
+# Title and Dependency Checks
+# -----------------------------------------------------------------------------
+log_title "Update Git Repositories"
+
+dependencies=(git fd)
+for cmd in "${dependencies[@]}"; do
+    if ! command -v "${cmd}" >/dev/null; then
+        log_error "ERROR: Missing dependency - '${cmd}'"
+        exit 1
+    fi
+done
+
+# Main Logic
+# -----------------------------------------------------------------------------
+log_heading "Scanning for Git Repositories"
+
+declare -a repos=()
+declare -a updated=()
+declare -a failed=()
+declare -a skipped=()
+
+# Find all directories with .git subdirectories recursively
+while IFS= read -r -d '' repo_dir; do
+    repo_path="$(dirname "${repo_dir}")"
+    repo_name="${repo_path#${REFERENCE_DIR}/}"
+
+    # Skip the root reference directory itself if it's a git repository
+    if [[ -z "${repo_name}" || "${repo_path}" == "${REFERENCE_DIR}" ]]; then
+        continue
+    fi
+
+    repos+=("${repo_name}")
+done < <(fd --type d --hidden --no-ignore --print0 '^\.git$' "${REFERENCE_DIR}")
+
+if [[ ${#repos[@]} -eq 0 ]]; then
+    log_warning "No git repositories found in ${REFERENCE_DIR}"
+    exit 0
+fi
+
+log_message "Found ${#repos[@]} git repositor$([[ ${#repos[@]} -eq 1 ]] && echo "y" || echo "ies")"
+log_newline
+
+# Update each repository
+log_heading "Updating Repositories"
+
+for repo in "${repos[@]}"; do
+    repo_path="${REFERENCE_DIR}/${repo}"
+    log_subheading "${repo}"
+
+    if [[ ! -d "${repo_path}/.git" ]]; then
+        log_warning "  Skipping: Not a git repository"
+        skipped+=("${repo}")
+        continue
+    fi
+
+    cd "${repo_path}" || {
+        log_failure "  Failed to enter directory"
+        failed+=("${repo}")
+        continue
+    }
+
+    # Check if this is a sparse checkout
+    is_sparse=false
+    if [[ -f .git/info/sparse-checkout ]] || [[ "$(git config core.sparseCheckout 2>/dev/null)" == "true" ]]; then
+        is_sparse=true
+        log_message "  [sparse checkout detected]"
+    fi
+
+    # Verify remote tracking branch exists
+    current_branch=$(git branch --show-current)
+    if ! git ls-remote --exit-code --heads origin "${current_branch}" >/dev/null 2>&1; then
+        log_warning "  Remote branch 'origin/${current_branch}' not found, skipping"
+        skipped+=("${repo}")
+        cd "${REFERENCE_DIR}" || exit 1
+        log_newline
+        continue
+    fi
+
+    # Perform the pull (sparse checkouts can't use --depth=1)
+    log_message "  Running git pull..."
+
+    # Try to pull with fast-forward only
+    pull_succeeded=false
+    pull_output=""
+    if [[ "${is_sparse}" == "true" ]]; then
+        if pull_output=$(git -c advice.diverging=false pull --ff-only 2>&1); then
+            pull_succeeded=true
+        fi
+    else
+        if pull_output=$(git -c advice.diverging=false pull --depth=1 --ff-only 2>&1); then
+            pull_succeeded=true
+        fi
+    fi
+
+    # Display git pull output
+    if [[ -n "${pull_output}" ]]; then
+        echo "${pull_output}" | sed 's/^/    /'
+    fi
+
+    # If fast-forward failed, reset to remote (safe for read-only documentation repos)
+    if [[ "${pull_succeeded}" == "false" ]]; then
+        log_message "  Fast-forward failed, resetting to remote..."
+
+        fetch_output=$(git -c advice.diverging=false fetch origin "${current_branch}" 2>&1)
+        if [[ -n "${fetch_output}" ]]; then
+            echo "${fetch_output}" | sed 's/^/    /'
+        fi
+
+        reset_output=$(git -c advice.diverging=false reset --hard "origin/${current_branch}" 2>&1)
+        if [[ $? -eq 0 ]]; then
+            if [[ -n "${reset_output}" ]]; then
+                echo "${reset_output}" | sed 's/^/    /'
+            fi
+            log_success "  Reset to remote successfully"
+            updated+=("${repo}")
+        else
+            if [[ -n "${reset_output}" ]]; then
+                echo "${reset_output}" | sed 's/^/    /'
+            fi
+            log_failure "  Update failed"
+            failed+=("${repo}")
+        fi
+    else
+        log_success "  Update complete"
+        updated+=("${repo}")
+    fi
+
+    cd "${REFERENCE_DIR}" || exit 1
+    log_newline
+done
+
+# Report Summary
+# -----------------------------------------------------------------------------
+log_heading "Update Summary"
+
+log_message "$(cat <<EOF
+  Total repositories: ${#repos[@]}
+       Updated/Clean: ${#updated[@]}
+              Failed: ${#failed[@]}
+             Skipped: ${#skipped[@]}
+EOF
+)"
+
+if [[ ${#failed[@]} -gt 0 ]]; then
+    log_newline
+    log_warning "Failed repositories:"
+    for repo in "${failed[@]}"; do
+        log_message "  - ${repo}"
+    done
+fi
+
+if [[ ${#skipped[@]} -gt 0 ]]; then
+    log_newline
+    log_message "Skipped repositories:"
+    for repo in "${skipped[@]}"; do
+        log_message "  - ${repo}"
+    done
+fi
+
+log_newline
+if [[ ${#failed[@]} -gt 0 ]]; then
+    log_failure "Update completed with failures"
+    exit 1
+else
+    log_done "All repositories updated successfully"
+    exit 0
+fi
