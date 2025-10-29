@@ -16,13 +16,13 @@ Usage: $(basename "$0")
 Downloads and updates standalone documentation from web sources.
 
 This script downloads documentation from web sources defined in a CSV file,
-using get-webpage to save them as Markdown files in the docs directory.
+using snag to save them as Markdown files in the docs directory.
 
 Source Configuration:
   scripts/update-docs-url-list.csv    CSV file with columns: url,filename,description
 
 Dependencies:
-  get-webpage        CLI tool for downloading web pages as Markdown
+  snag               CLI tool for downloading web pages as Markdown
   curl               Used for URL validation before download
 
 Optional arguments:
@@ -45,7 +45,7 @@ trap ctrlc_trap SIGINT
 # -----------------------------------------------------------------------------
 log_title "Update Standalone Documentation"
 
-dependencies=(get-webpage curl)
+dependencies=(snag curl)
 for cmd in "${dependencies[@]}"; do
     if ! command -v "${cmd}" >/dev/null; then
         log_error "ERROR: Missing dependency - '${cmd}'"
@@ -108,7 +108,7 @@ tail -n +2 "${CSV_FILE}" | while IFS=',' read -r url filename description; do
 
     # Download the webpage
     log_message "  Downloading..."
-    download_output=$(get-webpage "${url}" --output "${output_path}" 2>&1)
+    download_output=$(snag "${url}" --output "${output_path}" 2>&1)
     download_exit=$?
 
     if [[ ${download_exit} -eq 0 ]]; then

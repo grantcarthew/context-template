@@ -28,7 +28,6 @@ This is a local documentation repository that maintains cloned copies of frequen
 ├── .gitignore          # Git ignore rules
 ├── docs/               # Local reference documentation (tracked)
 │   ├── INDEX.csv       # Index of reference documentation (.gitignored)
-│   ├── tools.md        # CLI tools reference (synced across branches)
 │   ├── source.md       # External documentation sources (synced across branches)
 │   └── [doc-file].md   # Other branch-specific local documentation files
 ├── scripts/            # Utility scripts (synced across branches)
@@ -184,7 +183,7 @@ fd --hidden --no-ignore "pattern" ~/reference/
 
 - **Root-level metadata**: UPPERCASE (e.g., `README.md`, `AGENTS.md`, `ROLE.md`, `INDEX.csv`)
 - **Critical AI configuration**: UPPERCASE (e.g., `ENVIRONMENT.md`)
-- **Regular documentation**: lowercase with hyphens (e.g., `tools.md`, `source.md`)
+- **Regular documentation**: lowercase with hyphens (e.g., `github.md`, `source.md`)
 - **Scripts**: lowercase, no extension (e.g., `update-docs`)
 - **Directories**: lowercase, descriptive names matching source
 

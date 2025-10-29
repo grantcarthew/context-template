@@ -1,78 +1,59 @@
 # Local Environment Information
 
-The following information is for AI Agents to learn specifics of the user and environment they are running in.
-
-**Instructions**: Customize this file with your personal information, system configuration, and preferences. This helps AI agents provide more contextual and relevant assistance.
-
 ## User
 
 - Name: [Your Name]
 - Skills: [Your primary skills and expertise areas]
 - Language: [Your preferred language and dialect, e.g., American English, British English]
-- Location: [Your city, state/province, country]
+- Location: [Your city, state/province, country, (timezone)]
 - Company: [Your company name, if applicable]
 - Document Style: [Your preferred documentation format, e.g., CommonMark, GitHub Flavored Markdown]
 
-## Operating System
+## Desktop
 
-- OS: [Your OS and version, e.g., macOS Sequoia 15.0, Ubuntu 22.04 LTS, Windows 11]
-- CPU: [Your CPU model and specs]
-- Memory: [Your system memory]
-- Shell: [Your shell and version, e.g., bash 5.2.15, zsh 5.9]
-- Architecture: [Your system architecture, e.g., x86_64, arm64]
-- Locale: [Your system locale, e.g., en_US.UTF-8, en_GB.UTF-8]
+- OS: [Your OS and version, e.g., EndeavourOS (Arch Linux) x86_64, macOS Tahoe 26.0 arm64, Ubuntu 22.04 LTS]
+- Shell: [Your shell (don't include a version), e.g., Bash , Zsh]
+- Package manager: [The package managers you are using, e.g., pacman/yay, apt, uv, brew/mise]
 
-## Terminal
+## Reference Repository
 
-- Terminal Emulator: [Your terminal application and version, e.g., iTerm2 3.5.0, Alacritty 0.13.0, Windows Terminal 1.18]
-- Terminal type: [Your TERM variable, e.g., `xterm-256color`, `alacritty`]
-- Color support: [Your color capabilities, e.g., 256 colors, truecolor]
-- Font: [Your preferred terminal font, e.g., JetBrains Mono, Fira Code, Cascadia Code]
-- Additional features: [Any special features or configuration notes]
+A curated collection of documentation and source code for AI agent context.
 
-## Reference Documentation
+**Structure:**
 
-- Commonly used documentation is cloned to the local system for easy reference
-- Default Path: `~/reference` (customize to your preferred location)
-- Index:
-  - Main Index: `~/reference/INDEX.csv`
-  - Child Index: Each documentation directory contains an INDEX.csv file
+- Global: ~/reference (system-wide references)
+- Local: ./reference (project-specific references)
+- Index: INDEX.csv in each directory (metadata about contents)
 
-Querying indexes:
+**Finding information:**
 
-- Read CSV files directly using the Read tool (most token-efficient)
-- Use Ripgrep for keyword searches: `rg -i "keyword" ~/reference/*/INDEX.csv`
-- Use fd for document searches: `fd --type f "pattern" ~/reference`
-- Example: `rg -i "yaml" ~/reference/*/INDEX.csv` to find YAML-related docs
+```bash
+# Quick overview:
+lsd --tree --depth 1 ~/reference
 
-## CLI Tools
+# Search by keyword:
+rg -i "keyword" ~/reference/*/INDEX.csv
 
-Preferred CLI tools are available on the system. See `docs/tools.md` for a comprehensive list and customize it with your installed tools.
+# Find files:
+fd --type f --hidden --no-ignore 'filename'
+```
 
-Key preferences (customize with your preferred tools):
+**When to use:**
 
-- Use Ripgrep `rg` instead of grep (faster, better defaults)
-- Use `fd` for finding files instead of find (faster, simpler syntax)
-- Use `bat` for viewing files with syntax highlighting (optional)
-- Use `lsd` or `exa` for enhanced directory listings (optional)
+- Before using APIs or external services
+- When you need project-specific examples
+- When standard knowledge seems insufficient
 
-Directory tree examples:
+For more information read ~/reference/AGENTS.md
 
-- With lsd: `lsd --tree --depth <n> [dir]`
-- With exa: `exa --tree --level <n> [dir]`
-- Standard: `tree -L <n> [dir]`
+## Preferred CLI Tools
 
-## Custom Commands (Optional)
+- `rg` (ripgrep) instead of grep
+- `lsd --tree --depth <n>` for directory trees
+- `fd` for finding files
 
-This section is for any custom commands or aliases you've created.
+## Fetch Internet Content
 
-Examples:
-
-- `my-search <terms>`: Custom search wrapper
-- `my-fetch <url>`: Custom web page fetcher
-- Add your own custom commands here
-
-## Additional Reference Documentation
-
-- **~/reference/docs/tools.md**: Comprehensive list of installed CLI tools (customize this file)
-- **~/reference/docs/source.md**: External documentation sources and setup
+- `kagi <search-terms>`: Search the internet returning clean search results
+- `snag <url>`: Fetch web page content in Markdown via a browser
+- `curl https://raw.githubusercontent.com/{username}/{repository}/{branch}/{path_to_file}`: GitHub file content

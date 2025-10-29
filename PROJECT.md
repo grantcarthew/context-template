@@ -182,12 +182,13 @@ CRITICAL RULE: The root INDEX.csv file catalogs ONLY child directories (subdirec
 
 Include:
 
-- Child directories like: docs/, gitlab/, newrelic/, etc
+- Child directories like: docs/, gitlab/, golang/, etc
 - Both git repositories and local directories
 
 Exclude:
 
 - All root-level markdown files: ENVIRONMENT.md, PROJECT.md, AGENTS.md, README.md, ROLE.md
+- The scripts directory
 - Script files: update-docs, update-repos, update-references
 - Hidden files and directories: .git, .gitignore
 
