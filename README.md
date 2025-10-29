@@ -28,7 +28,7 @@ For Developers:
 - CSV Indexing: Efficient navigation system for both humans and AI
 - Flexible Structure: Organize documentation by your workflow
 - Git-Based: Leverage shallow clones and sparse checkouts to minimize disk usage
-- AI Agent Configuration: Customizable ENVIRONMENT.md for AI agent context
+- AI agent Configuration: Customizable ENVIRONMENT.md for AI agent context
 - Minimal Dependencies: Only requires Git, Bash 5+, fd, ripgrep, and snag
 
 ## Prerequisites
@@ -59,7 +59,7 @@ You can fork this repository to track your own customisations.
 
 ### 2. Customise Configuration Files
 
-Edit `ENVIRONMENT.md` and customise this file to make it your own. This is how you tell the AI Agent who you are and where it is.
+Edit `ENVIRONMENT.md` and customise this file to make it your own. This is how you tell the AI agent who you are and where it is.
 
 ```bash
 nvim ~/reference/ENVIRONMENT.md
@@ -70,7 +70,7 @@ Fill in:
 - Your name, skills, and preferences
 - Desktop environment and package manager details
 
-Add or remove anything so your AI Agent can be fun and work effectively.
+Add or remove anything so your AI agent can be fun and work effectively.
 
 ### 3. Make Scripts Executable
 
@@ -183,7 +183,7 @@ fd "install.md" ~/reference
 Your AI assistant (like Claude Code) can read:
 
 1. Environment context: `~/reference/ENVIRONMENT.md`
-2. Documentation indexe: `~/reference/INDEX.csv` file for quick navigation
+2. Documentation index: `~/reference/INDEX.csv` file for quick navigation
 3. Agent local instructions: `AGENTS.md` and `ROLE.md`
 4. Project or plan files: `PROJECT.md` file for current scope of work or tasks
 5. Direct documentation access: Any file in cloned repositories
@@ -195,19 +195,21 @@ Prompt example:
 _Note: You should automate this as I've done here [start](https://github.com/grantcarthew/scripts/blob/main/start)_
 
 ```txt
-Read the ~/reference/ENVIRONMENT.md file for environment context. Read the ~/reference/INDEX.csv
-for documentation context. Read the AGENTS.md file for repository context.
-Read the PROJECT.md document. Respond with the project title, and the shortest possible summary
-of work required. Include completed tasks. Number the items for ease of reference.
+Read the ~/reference/ENVIRONMENT.md file for environment context.
+Read the ~/reference/INDEX.csv for documentation context.
+Read the AGENTS.md file for repository context.
+Read the PROJECT.md document. Respond with the project title, and the shortest
+possible summary of work required. Include completed tasks.
+Number the items for ease of reference.
 ```
 
-Once the AI Agent has finished reading the documents, during a session if you need it to skill up on a cloned repo and it doesn't do it itself, motivate it with:
+Once the AI agent has finished reading the documents, during a session if you need it to skill up on a cloned repo and it doesn't do it itself, motivate it with:
 
 ```txt
 Please read the GitLab pipeline documentation before we start.
 ```
 
-I'm using GitLab as an example here. The AI Agent will immediately read from the known INDEX.csv files.
+I'm using GitLab as an example here. The AI agent will immediately read from the known INDEX.csv files.
 
 In the above example, the ENVIRONMENT.md and INDEX.csv files are the home reference resources, the AGENTS.md and PROJECT.md documents are local repository files. Don't use the AGENTS.md and PROJECT.md documents in this repository, they are for working on the reference repository itself.
 
@@ -227,12 +229,12 @@ The included `.gitignore` excludes child directories and INDEX.csv files, allowi
 
 ### Creating INDEX.csv Files
 
-In the age of AI Agents, you don't do this yourself.
+In the age of AI agents, you don't do this yourself.
 
-Launch your AI Agent while in the ~/reference directory, then paste in this prompt:
+Launch your AI agent while in the ~/reference directory, then paste in this prompt:
 
 ```txt
-Read the ~/reference/ENVIRONMENT.md file for environment context.\
+Read the ~/reference/ENVIRONMENT.md file for environment context.
 Read the ~/reference/INDEX.csv for documentation context.
 Read the AGENTS.md file for repository context.
 Read the PROJECT.md document to understand your task.
@@ -304,7 +306,7 @@ Mozilla Public License Version 2.0
 
 ## Resources
 
-- Documentation Sources: See `docs/source.md` for curated examples
-- Agent Instructions: See `AGENTS.md` for AI agent integration details
-- Role Definition: See `ROLE.md` for AI agent role and responsibilities
+- Documentation Sources: See [docs/source.md](docs/source.md) for curated examples
+- Agent Instructions: See [AGENTS.md](AGENTS.md) for AI agent integration details
+- Role Definition: See [ROLE.md](ROLE.md) for AI agent role and responsibilities
 - Project Definition: See `PROJECT.md` for reference repository refresh work
