@@ -5,8 +5,8 @@
 set -o pipefail
 [[ ${DEBUG-} ]] && set -o xtrace
 SCRIPT_DIR="$(cd "${BASH_SOURCE[0]%/*}" || exit 1; pwd)"
-REFERENCE_DIR="$(dirname "${SCRIPT_DIR}")"
-DOCS_DIR="${REFERENCE_DIR}/docs"
+CONTEXT_DIR="$(dirname "${SCRIPT_DIR}")"
+DOCS_DIR="${CONTEXT_DIR}/docs"
 source "${SCRIPT_DIR}/lib.sh"
 
 function print_usage() {

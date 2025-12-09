@@ -5,16 +5,16 @@
 set -o pipefail
 [[ ${DEBUG-} ]] && set -o xtrace
 SCRIPT_DIR="$(cd "${BASH_SOURCE[0]%/*}" || exit 1; pwd)"
-REFERENCE_DIR="$(dirname "${SCRIPT_DIR}")"
+CONTEXT_DIR="$(dirname "${SCRIPT_DIR}")"
 source "${SCRIPT_DIR}/lib.sh"
 
 function print_usage() {
   cat <<EOF
 Usage: $(basename "$0")
 
-Updates all git repositories in the reference documentation directory.
+Updates all git repositories in the context documentation directory.
 
-This script recursively finds all git repositories under ${REFERENCE_DIR}
+This script recursively finds all git repositories under ${CONTEXT_DIR}
 and performs a git pull on each one. Works with both standard and sparse checkouts.
 
 Dependencies:
@@ -61,18 +61,18 @@ declare -a skipped=()
 # Find all directories with .git subdirectories recursively
 while IFS= read -r -d '' repo_dir; do
     repo_path="$(dirname "${repo_dir}")"
-    repo_name="${repo_path#${REFERENCE_DIR}/}"
+    repo_name="${repo_path#${CONTEXT_DIR}/}"
 
-    # Skip the root reference directory itself if it's a git repository
-    if [[ -z "${repo_name}" || "${repo_path}" == "${REFERENCE_DIR}" ]]; then
+    # Skip the root context directory itself if it's a git repository
+    if [[ -z "${repo_name}" || "${repo_path}" == "${CONTEXT_DIR}" ]]; then
         continue
     fi
 
     repos+=("${repo_name}")
-done < <(fd --type d --hidden --no-ignore --print0 '^\.git$' "${REFERENCE_DIR}")
+done < <(fd --type d --hidden --no-ignore --print0 '^\.git$' "${CONTEXT_DIR}")
 
 if [[ ${#repos[@]} -eq 0 ]]; then
-    log_warning "No git repositories found in ${REFERENCE_DIR}"
+    log_warning "No git repositories found in ${CONTEXT_DIR}"
     exit 0
 fi
 
@@ -83,7 +83,7 @@ log_newline
 log_heading "Updating Repositories"
 
 for repo in "${repos[@]}"; do
-    repo_path="${REFERENCE_DIR}/${repo}"
+    repo_path="${CONTEXT_DIR}/${repo}"
     log_subheading "${repo}"
 
     if [[ ! -d "${repo_path}/.git" ]]; then
@@ -110,7 +110,7 @@ for repo in "${repos[@]}"; do
     if ! git ls-remote --exit-code --heads origin "${current_branch}" >/dev/null 2>&1; then
         log_warning "  Remote branch 'origin/${current_branch}' not found, skipping"
         skipped+=("${repo}")
-        cd "${REFERENCE_DIR}" || exit 1
+        cd "${CONTEXT_DIR}" || exit 1
         log_newline
         continue
     fi
@@ -164,7 +164,7 @@ for repo in "${repos[@]}"; do
         updated+=("${repo}")
     fi
 
-    cd "${REFERENCE_DIR}" || exit 1
+    cd "${CONTEXT_DIR}" || exit 1
     log_newline
 done
 

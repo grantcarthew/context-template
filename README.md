@@ -1,4 +1,4 @@
-# AI Reference Documentation
+# AI Context Documentation
 
 A structured system for maintaining local technical documentation as a reference library, optimised for AI coding assistants.
 
@@ -48,11 +48,11 @@ Optional but recommended:
 
 ### 1. Clone This Repository
 
-It's recommended to clone this repository into your $HOME at ~/reference. This path is used throughout the documents and will need changing if you decide to use a different location.
+It's recommended to clone this repository into your $HOME at ~/context. This path is used throughout the documents and will need changing if you decide to use a different location.
 
 ```bash
-git clone https://github.com/grantcarthew/reference-template.git ~/reference
-cd ~/reference
+git clone https://github.com/grantcarthew/context-template.git ~/context
+cd ~/context
 ```
 
 You can fork this repository to track your own customisations.
@@ -62,7 +62,7 @@ You can fork this repository to track your own customisations.
 Edit `ENVIRONMENT.md` and customise this file to make it your own. This is how you tell the AI agent who you are and where it is.
 
 ```bash
-nvim ~/reference/ENVIRONMENT.md
+nvim ~/context/ENVIRONMENT.md
 ```
 
 Fill in:
@@ -75,9 +75,9 @@ Add or remove anything so your AI agent can be fun and work effectively.
 ### 3. Make Scripts Executable
 
 ```bash
-chmod +x ~/reference/update-references
-chmod +x ~/reference/scripts/update-repos
-chmod +x ~/reference/scripts/update-docs
+chmod +x ~/context/update-references
+chmod +x ~/context/scripts/update-repos
+chmod +x ~/context/scripts/update-docs
 ```
 
 ## Quick Start
@@ -87,7 +87,7 @@ chmod +x ~/reference/scripts/update-docs
 1. Choose documentation to clone (see `docs/source.md` for examples):
 
 ```bash
-cd ~/reference
+cd ~/context
 git clone --depth=1 https://github.com/kubernetes/website.git kubernetes
 ```
 
@@ -101,15 +101,15 @@ _Note: You don't want to clone the whole of the internet here, just reference do
 
 3. Configure your AI coding assistant to read the following files during every session start:
 
-- `~/reference/ENVIRONMENT.md` - Your environment configuration
-- `~/reference/INDEX.csv` - Your reference index
+- `~/context/ENVIRONMENT.md` - Your environment configuration
+- `~/context/INDEX.csv` - Your reference index
 
 _Note: You should also be reading the local directory AGENTS.md (not this one) and setting a role._
 
 ### Example: Adding Multiple Documentation Sources
 
 ```bash
-cd ~/reference
+cd ~/context
 
 # Cloud platforms
 git clone --depth=1 https://github.com/hashicorp/terraform-docs.git terraform
@@ -127,12 +127,12 @@ git clone --depth=1 https://github.com/docker/docs.git docker
 ## Directory Structure
 
 ```
-~/reference/
+~/context/
 ├── README.md                     # This file - project introduction
 ├── AGENTS.md                     # Instructions for AI agents
 ├── ROLE.md                       # AI agent role definition
 ├── ENVIRONMENT.md                # Your environment configuration (customise!)
-├── PROJECT.md                    # Repository maintenance documentation
+├── project.md                    # Repository maintenance documentation
 ├── .gitignore                    # Excludes child directories and INDEX.csv files
 ├── update-references             # Main update script
 ├── docs/                         # Local documentation
@@ -155,7 +155,7 @@ git clone --depth=1 https://github.com/docker/docs.git docker
 Run the main update script regularly:
 
 ```bash
-~/reference/update-references
+~/context/update-references
 ```
 
 This will:
@@ -168,24 +168,24 @@ This will:
 
 ```bash
 # Search across all documentation
-cd ~/reference
+cd ~/context
 rg -i "search term" --type md
 
 # Search within specific documentation
 rg -i "kubernetes pod" kubernetes/
 
 # Find files by name
-fd "install.md" ~/reference
+fd "install.md" ~/context
 ```
 
 ### Using with AI Coding Assistants
 
 Your AI assistant (like Claude Code) can read:
 
-1. Environment context: `~/reference/ENVIRONMENT.md`
-2. Documentation index: `~/reference/INDEX.csv` file for quick navigation
+1. Environment context: `~/context/ENVIRONMENT.md`
+2. Documentation index: `~/context/INDEX.csv` file for quick navigation
 3. Agent local instructions: `AGENTS.md` and `ROLE.md`
-4. Project or plan files: `PROJECT.md` file for current scope of work or tasks
+4. Project or plan files: `project.md` file for current scope of work or tasks
 5. Direct documentation access: Any file in cloned repositories
 
 The AI can efficiently search, navigate, and reference documentation without external API calls.
@@ -195,10 +195,10 @@ Prompt example:
 _Note: You should automate this as I've done here [start](https://github.com/grantcarthew/scripts/blob/main/start)_
 
 ```txt
-Read the ~/reference/ENVIRONMENT.md file for environment context.
-Read the ~/reference/INDEX.csv for documentation context.
+Read the ~/context/ENVIRONMENT.md file for environment context.
+Read the ~/context/INDEX.csv for documentation context.
 Read the AGENTS.md file for repository context.
-Read the PROJECT.md document. Respond with the project title, and the shortest
+Read the project.md document. Respond with the project title, and the shortest
 possible summary of work required. Include completed tasks.
 Number the items for ease of reference.
 ```
@@ -211,9 +211,9 @@ Please read the GitLab pipeline documentation before we start.
 
 I'm using GitLab as an example here. The AI agent will immediately read from the known INDEX.csv files.
 
-In the above example, the ENVIRONMENT.md and INDEX.csv files are the home reference resources, the AGENTS.md and PROJECT.md documents are local repository files. Don't use the AGENTS.md and PROJECT.md documents in this repository, they are for working on the reference repository itself.
+In the above example, the ENVIRONMENT.md and INDEX.csv files are the home context resources, the AGENTS.md and project.md documents are local repository files. Don't use the AGENTS.md and project.md documents in this repository, they are for working on the context repository itself.
 
-Read more about [AGENTS.md](https://agents.md) and have a look at the local [PROJECT.md](PROJECT.md) document as a project example.
+Read more about [AGENTS.md](https://agents.md) and have a look at the local [project.md](project.md) document as a project example.
 
 More project examples can be found in the [snag project](https://github.com/grantcarthew/snag/tree/main/docs/archive).
 
@@ -231,13 +231,13 @@ The included `.gitignore` excludes child directories and INDEX.csv files, allowi
 
 In the age of AI agents, you don't do this yourself.
 
-Launch your AI agent while in the ~/reference directory, then paste in this prompt:
+Launch your AI agent while in the ~/context directory, then paste in this prompt:
 
 ```txt
-Read the ~/reference/ENVIRONMENT.md file for environment context.
-Read the ~/reference/INDEX.csv for documentation context.
+Read the ~/context/ENVIRONMENT.md file for environment context.
+Read the ~/context/INDEX.csv for documentation context.
 Read the AGENTS.md file for repository context.
-Read the PROJECT.md document to understand your task.
+Read the project.md document to understand your task.
 Once you're read these documents, start the Reference Repository Refresh project work.
 ```
 
@@ -264,7 +264,7 @@ Set up a weekly update routine:
 
 ```bash
 # Add to crontab or run manually
-cd ~/reference && ./update-references
+cd ~/context && ./update-references
 ```
 
 ### Troubleshooting
@@ -309,4 +309,4 @@ Mozilla Public License Version 2.0
 - Documentation Sources: See [docs/source.md](docs/source.md) for curated examples
 - Agent Instructions: See [AGENTS.md](AGENTS.md) for AI agent integration details
 - Role Definition: See [ROLE.md](ROLE.md) for AI agent role and responsibilities
-- Project Definition: See `PROJECT.md` for reference repository refresh work
+- Project Definition: See `project.md` for context repository refresh work

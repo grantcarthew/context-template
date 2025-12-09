@@ -15,24 +15,24 @@
 - Shell: [Your shell (don't include a version), e.g., Bash , Zsh]
 - Package manager: [The package managers you are using, e.g., pacman/yay, apt, uv, brew/mise]
 
-## Reference Repository
+## Context Repository
 
 A curated collection of documentation and source code for AI agent context.
 
 **Structure:**
 
-- Global: ~/reference (system-wide references)
-- Local: ./reference (project-specific references)
+- Global: ~/context (system-wide references)
+- Local: ./context (project-specific references)
 - Index: INDEX.csv in each directory (metadata about contents)
 
 **Finding information:**
 
 ```bash
 # Quick overview:
-lsd --tree --depth 1 ~/reference
+lsd --tree --depth 1 ~/context
 
 # Search by keyword:
-rg -i "keyword" ~/reference/*/INDEX.csv
+rg -i "keyword" ~/context/*/INDEX.csv
 
 # Find files:
 fd --type f --hidden --no-ignore 'filename'
@@ -44,7 +44,7 @@ fd --type f --hidden --no-ignore 'filename'
 - When you need project-specific examples
 - When standard knowledge seems insufficient
 
-For more information read ~/reference/AGENTS.md
+For more information read ~/context/AGENTS.md
 
 ## Preferred CLI Tools
 

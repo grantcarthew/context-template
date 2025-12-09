@@ -17,17 +17,17 @@ This is a local documentation repository that maintains cloned copies of frequen
 ## Repository Structure
 
 ```txt
-~/reference/
+~/context/
 ├── INDEX.csv           # Branch-specific child directories index (.gitignored)
 ├── README.md           # Human-readable repository guide
 ├── ROLE.md             # AI agent role definition
 ├── AGENTS.md           # This file - AI agent instructions
-├── PROJECT.md          # Reference repository maintenance project
+├── project.md          # Reference repository maintenance project
 ├── ENVIRONMENT.md      # User and system environment configuration
 ├── update-references   # Main update script
 ├── .gitignore          # Git ignore rules
-├── docs/               # Local reference documentation (tracked)
-│   ├── INDEX.csv       # Index of reference documentation (.gitignored)
+├── docs/               # Local context documentation (tracked)
+│   ├── INDEX.csv       # Index of context documentation (.gitignored)
 │   ├── source.md       # External documentation sources (synced across branches)
 │   └── [doc-file].md   # Other branch-specific local documentation files
 ├── scripts/            # Utility scripts (synced across branches)
@@ -44,7 +44,7 @@ This is a local documentation repository that maintains cloned copies of frequen
 To add a new documentation source:
 
 ```bash
-cd ~/reference
+cd ~/context
 git clone --depth=1 [repository-url] [directory-name]
 ```
 
@@ -78,9 +78,9 @@ directory,description,topics,source_url,source_type,last_updated
   - `local-docs`: Local directory maintained in this repository
 - `last_updated`: Date in YYYY-MM-DD format
 
-**CRITICAL**: Root INDEX.csv lists child directories ONLY. Root-level files (ENVIRONMENT.md, PROJECT.md, etc.) are NOT included.
+**CRITICAL**: Root INDEX.csv lists child directories ONLY. Root-level files (ENVIRONMENT.md, project.md, etc.) are NOT included.
 
-**IMPORTANT**: The root INDEX.csv catalogs ONLY child directories, NOT root-level files. Root-level documentation (ENVIRONMENT.md, PROJECT.md, AGENTS.md, README.md, ROLE.md) is NOT indexed in the root INDEX.csv but is read directly by agents during session initialization. Child directories vary by branch.
+**IMPORTANT**: The root INDEX.csv catalogs ONLY child directories, NOT root-level files. Root-level documentation (ENVIRONMENT.md, project.md, AGENTS.md, README.md, ROLE.md) is NOT indexed in the root INDEX.csv but is read directly by agents during session initialization. Child directories vary by branch.
 
 Subdirectories have their own INDEX.csv for detailed navigation. Read the root INDEX.csv to discover available child directory indexes for the current branch.
 
@@ -89,12 +89,12 @@ Subdirectories have their own INDEX.csv for detailed navigation. Read the root I
 ### Update All Documentation
 
 ```bash
-~/reference/update-references
+~/context/update-references
 ```
 
 This script:
 
-- Scans for all Git repositories in the reference directory
+- Scans for all Git repositories in the context directory
 - Performs shallow pulls (--depth=1) on each repository
 - Updates any copied markdown documents
 - Provides a summary of updated, failed, and skipped tasks
@@ -102,14 +102,14 @@ This script:
 ### Manual Update of Single Repository
 
 ```bash
-cd ~/reference/[repo-name]
+cd ~/context/[repo-name]
 git pull --depth=1
 ```
 
 ### Check Repository Status
 
 ```bash
-cd ~/reference/[repo-name]
+cd ~/context/[repo-name]
 git status
 git log -1
 ```
@@ -124,34 +124,34 @@ git log -1
 
 ```bash
 # Search all INDEX.csv files for a topic
-rg -i "[topic]" ~/reference/*/INDEX.csv
+rg -i "[topic]" ~/context/*/INDEX.csv
 
 # Search main index for keywords
-rg "[keyword1]|[keyword2]" ~/reference/INDEX.csv
+rg "[keyword1]|[keyword2]" ~/context/INDEX.csv
 ```
 
 **Full-text search across all documentation**:
 
 ```bash
-cd ~/reference
+cd ~/context
 rg -i "search-term" --type md
 ```
 
 **Search within specific documentation source**:
 
 ```bash
-rg -i "search-term" ~/reference/[directory-name]/
+rg -i "search-term" ~/context/[directory-name]/
 ```
 
 **Find files by name pattern**:
 
 ```bash
-fd --hidden --no-ignore "pattern" ~/reference/
+fd --hidden --no-ignore "pattern" ~/context/
 ```
 
 **Recommended workflow for agents**:
 
-1. Read `~/reference/INDEX.csv` to identify relevant directory
+1. Read `~/context/INDEX.csv` to identify relevant directory
 2. Read the child directory's INDEX.csv for detailed navigation (e.g., `[directory-name]/INDEX.csv`)
 3. Navigate directly to the documentation file using the path from the index
 
@@ -211,8 +211,8 @@ Prefer these tools when working with the repository:
 
 **Example workflow**:
 
-1. Read `~/reference/INDEX.csv` to identify relevant child directory
-2. Read `~/reference/[directory-name]/INDEX.csv` for detailed navigation
+1. Read `~/context/INDEX.csv` to identify relevant child directory
+2. Read `~/context/[directory-name]/INDEX.csv` for detailed navigation
 3. Locate the specific documentation section or file path
 4. Navigate directly to the documentation file
 
@@ -222,8 +222,8 @@ Prefer these tools when working with the repository:
 
 **Reading user context**:
 
-1. Read `~/reference/ENVIRONMENT.md` for user preferences, OS, tools
-2. Read `~/reference/docs/INDEX.csv` to discover available local documentation
+1. Read `~/context/ENVIRONMENT.md` for user preferences, OS, tools
+2. Read `~/context/docs/INDEX.csv` to discover available local documentation
 3. Read relevant docs files based on current task requirements
 
 ### Task 3: Verify Documentation Currency
@@ -236,7 +236,7 @@ Prefer these tools when working with the repository:
 
 1. Clone repository (standard or sparse checkout as needed)
 2. Create directory-level INDEX.csv if documentation is extensive
-   - **See PROJECT.md** for indexing philosophy: only include content that helps LLMs understand how to USE the tool
+   - **See project.md** for indexing philosophy: only include content that helps LLMs understand how to USE the tool
    - Exclude contributor-focused content (CONTRIBUTING, CODE_OF_CONDUCT, CI/CD configs, test infrastructure)
    - Goal: minimize tokens while maximizing reference value
 3. Update main INDEX.csv with new entry
@@ -247,7 +247,7 @@ Prefer these tools when working with the repository:
 1. Use `rg` with appropriate filters:
 
    ```bash
-   rg -i "search-term" --type md ~/reference/
+   rg -i "search-term" --type md ~/context/
    ```
 
 2. Review results and provide file paths with line numbers
@@ -266,7 +266,7 @@ Prefer these tools when working with the repository:
 
 **Resolution**:
 
-1. List actual directories: `lsd --tree --depth <n> ~/reference/`
+1. List actual directories: `lsd --tree --depth <n> ~/context/`
 2. Compare with INDEX.csv entries
 3. Update INDEX.csv manually or remove obsolete entries
 4. Verify the INDEX.csv file
@@ -277,7 +277,7 @@ Prefer these tools when working with the repository:
 
 **Resolution**:
 
-1. Check if repository exists: `lsd ~/reference/`
+1. Check if repository exists: `lsd ~/context/`
 2. Verify INDEX.csv for source information
 3. Check if sparse checkout excludes needed paths
 4. Run update-references to ensure repositories are current
@@ -296,7 +296,7 @@ Prefer these tools when working with the repository:
 
 - [ENVIRONMENT.md](ENVIRONMENT.md) - User and system environment configuration
 - [docs/source.md](docs/source.md) - External documentation sources and setup instructions
-- [docs/INDEX.csv](docs/INDEX.csv) - Index of local reference documentation (branch-specific)
+- [docs/INDEX.csv](docs/INDEX.csv) - Index of local context documentation (branch-specific)
 - Additional docs files vary by branch - see docs/INDEX.csv
 
 ### External Documentation Indexes

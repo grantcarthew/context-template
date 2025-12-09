@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides examples and instructions for cloning external documentation repositories into your reference directory. Customize this file to track your own documentation sources.
+This document provides examples and instructions for cloning external documentation repositories into your context directory. Customize this file to track your own documentation sources.
 
 ## Quick Start
 
@@ -101,7 +101,7 @@ src,core,Core library implementation,src/core,go
 Organize repositories logically:
 
 ```
-~/reference/
+~/context/
 ├── INDEX.csv           # Master index of all sources
 ├── docs/               # Local documentation
 ├── cloud/              # Cloud platform docs
@@ -148,12 +148,12 @@ Choose documentation sources based on your technology stack:
 The `update-references` script in the repository root automatically updates all cloned repositories:
 
 ```bash
-~/reference/update-references
+~/context/update-references
 ```
 
 This script:
 
-- Finds all git repositories in the reference directory
+- Finds all git repositories in the context directory
 - Performs a shallow pull on each repository
 - Reports success, failures, and skipped repositories
 

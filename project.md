@@ -1,8 +1,8 @@
-# Reference Repository Refresh
+# Context Repository Refresh
 
 ## Project Overview
 
-This project maintains the reference repository's INDEX.csv file system. The repository contains Git-cloned documentation sources, tool/application source code, and local documentation directories that serve as reference material. Each source should have a child INDEX.csv file that catalogs its contents in a format appropriate to that source. The root INDEX.csv provides a master inventory of all child directories.
+This project maintains the context repository's INDEX.csv file system. The repository contains Git-cloned documentation sources, tool/application source code, and local documentation directories that serve as reference material. Each source should have a child INDEX.csv file that catalogs its contents in a format appropriate to that source. The root INDEX.csv provides a master inventory of all child directories.
 
 Project Type: Repository maintenance and indexing
 
@@ -25,7 +25,7 @@ Critical Constraints:
 
 ### In Scope
 
-- Discovery of all git repositories and significant local directories from the reference directory root
+- Discovery of all git repositories and significant local directories from the context directory root
 - Analysis of documentation and source code structure within each source
 - Creation/update of child INDEX.csv files with appropriate schemas for each source type
 - Update of root INDEX.csv to reflect all child directories only (NOT root-level documents)
@@ -33,7 +33,7 @@ Critical Constraints:
 - Topic taxonomy updates
 - Last updated date synchronization
 
-CRITICAL: Root INDEX.csv entries must be child directories only. Never include root-level markdown files (ENVIRONMENT.md, PROJECT.md, README.md, ROLE.md, etc.) in the root INDEX.csv.
+CRITICAL: Root INDEX.csv entries must be child directories only. Never include root-level markdown files (ENVIRONMENT.md, project.md, README.md, ROLE.md, etc.) in the root INDEX.csv.
 
 ### Out of Scope
 
@@ -43,7 +43,7 @@ CRITICAL: Root INDEX.csv entries must be child directories only. Never include r
 - Removal of existing documentation sources
 - Changes to repository structure or organization
 - Automated scheduling of refresh tasks
-- Changes to PROJECT.md and AGENTS.md documents
+- Changes to project.md and AGENTS.md documents
 
 CRITICAL CONSTRAINT: This project MUST NEVER delete or remove any files. All operations are read-only or create/update only. If files are discovered that seem out of place, document them but do not delete them.
 
@@ -117,7 +117,7 @@ For each source (git repository or local directory):
 
 ### Root INDEX.csv Update
 
-IMPORTANT: The root INDEX.csv MUST only contain child directories, NOT root-level documents. Do not include ENVIRONMENT.md, PROJECT.md, README.md, ROLE.md, or any other root-level files in the root INDEX.csv.
+IMPORTANT: The root INDEX.csv MUST only contain child directories, NOT root-level documents. Do not include ENVIRONMENT.md, project.md, README.md, ROLE.md, or any other root-level files in the root INDEX.csv.
 
 1. Read current root INDEX.csv
 2. Validate each entry against filesystem
@@ -149,7 +149,7 @@ IMPORTANT: The root INDEX.csv MUST only contain child directories, NOT root-leve
 
 ### Source Types
 
-This reference directory may contain:
+This context directory may contain:
 
 - Documentation repositories: Official docs cloned for reference (git)
 - Tool/application source code: Useful reference implementations (git)
@@ -174,11 +174,11 @@ Always use ISO 8601 format: `YYYY-MM-DD`
 
 - Always use relative paths
 - Relative to source root (repository or directory) for child INDEX.csv
-- Relative to reference directory root for root INDEX.csv
+- Relative to context directory root for root INDEX.csv
 
 ### Root INDEX.csv Scope
 
-CRITICAL RULE: The root INDEX.csv file catalogs ONLY child directories (subdirectories within ~/reference/), NOT root-level files.
+CRITICAL RULE: The root INDEX.csv file catalogs ONLY child directories (subdirectories within ~/context/), NOT root-level files.
 
 Include:
 
@@ -187,7 +187,7 @@ Include:
 
 Exclude:
 
-- All root-level markdown files: ENVIRONMENT.md, PROJECT.md, AGENTS.md, README.md, ROLE.md
+- All root-level markdown files: ENVIRONMENT.md, project.md, AGENTS.md, README.md, ROLE.md
 - The scripts directory
 - Script files: update-docs, update-repos, update-references
 - Hidden files and directories: .git, .gitignore
