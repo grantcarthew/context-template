@@ -23,7 +23,7 @@ A curated collection of documentation and source code for AI agent context.
 
 - Global: ~/context (system-wide references)
 - Local: ./context (project-specific references)
-- Index: INDEX.csv in each directory (metadata about contents)
+- Index: index.csv in each directory (metadata about contents)
 
 **Finding information:**
 
@@ -32,7 +32,7 @@ A curated collection of documentation and source code for AI agent context.
 lsd --tree --depth 1 ~/context
 
 # Search by keyword:
-rg -i "keyword" ~/context/*/INDEX.csv
+rg -i "keyword" ~/context/*/index.csv
 
 # Find files:
 fd --type f --hidden --no-ignore 'filename'

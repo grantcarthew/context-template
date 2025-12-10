@@ -78,9 +78,9 @@ git clone --depth=1 https://github.com/docker/docs.git docker
 
 ## Organizing Your Documentation
 
-### Creating INDEX.csv Files
+### Creating index.csv Files
 
-Each cloned repository should have an `INDEX.csv` file for efficient navigation. The schema can vary based on the source type:
+Each cloned repository should have an `index.csv` file for efficient navigation. The schema can vary based on the source type:
 
 **For documentation repositories**:
 
@@ -102,7 +102,7 @@ Organize repositories logically:
 
 ```
 ~/context/
-├── INDEX.csv           # Master index of all sources
+├── index.csv           # Master index of all sources
 ├── docs/               # Local documentation
 ├── cloud/              # Cloud platform docs
 │   ├── aws/
@@ -231,6 +231,6 @@ This script:
 
 1. **Choose relevant sources**: Only clone documentation you regularly reference
 2. **Keep it updated**: Run `update-references` weekly or bi-weekly
-3. **Create indexes**: Add `INDEX.csv` files to large repositories for easier navigation
+3. **Create indexes**: Add `index.csv` files to large repositories for easier navigation
 4. **Use .gitignore**: The `.gitignore` excludes child directories to keep your repository clean
 5. **Document your sources**: Update this file with your cloned repositories and their purposes

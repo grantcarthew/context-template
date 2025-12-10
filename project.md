@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project maintains the context repository's INDEX.csv file system. The repository contains Git-cloned documentation sources, tool/application source code, and local documentation directories that serve as reference material. Each source should have a child INDEX.csv file that catalogs its contents in a format appropriate to that source. The root INDEX.csv provides a master inventory of all child directories.
+This project maintains the context repository's index.csv file system. The repository contains Git-cloned documentation sources, tool/application source code, and local documentation directories that serve as reference material. Each source should have a child index.csv file that catalogs its contents in a format appropriate to that source. The root index.csv provides a master inventory of all child directories.
 
 Project Type: Repository maintenance and indexing
 
@@ -11,15 +11,15 @@ Status: Recurring maintenance task
 Critical Constraints:
 
 - Read-only/Create/Update operations only - NEVER delete files
-- Root INDEX.csv contains child directories only - NEVER include root-level files
+- Root index.csv contains child directories only - NEVER include root-level files
 
 ## Goals
 
 1. Discover all content sources - Find all git repositories and significant local directories
-2. Validate child INDEX.csv files - Ensure each source has an appropriate INDEX.csv
-3. Create missing child INDEX.csv files - Generate new indexes with schemas suited to each source's structure
-4. Update existing child INDEX.csv files - Refresh outdated entries, add missing content
-5. Synchronize root INDEX.csv - Update master inventory to reflect current state
+2. Validate child index.csv files - Ensure each source has an appropriate index.csv
+3. Create missing child index.csv files - Generate new indexes with schemas suited to each source's structure
+4. Update existing child index.csv files - Refresh outdated entries, add missing content
+5. Synchronize root index.csv - Update master inventory to reflect current state
 
 ## Scope
 
@@ -27,13 +27,13 @@ Critical Constraints:
 
 - Discovery of all git repositories and significant local directories from the context directory root
 - Analysis of documentation and source code structure within each source
-- Creation/update of child INDEX.csv files with appropriate schemas for each source type
-- Update of root INDEX.csv to reflect all child directories only (NOT root-level documents)
-- Validation of existing INDEX.csv entries against actual directory contents
+- Creation/update of child index.csv files with appropriate schemas for each source type
+- Update of root index.csv to reflect all child directories only (NOT root-level documents)
+- Validation of existing index.csv entries against actual directory contents
 - Topic taxonomy updates
 - Last updated date synchronization
 
-CRITICAL: Root INDEX.csv entries must be child directories only. Never include root-level markdown files (ENVIRONMENT.md, project.md, README.md, ROLE.md, etc.) in the root INDEX.csv.
+CRITICAL: Root index.csv entries must be child directories only. Never include root-level markdown files (environment.md, project.md, README.md, role.md, etc.) in the root index.csv.
 
 ### Out of Scope
 
@@ -58,18 +58,18 @@ CRITICAL CONSTRAINT: This project MUST NEVER delete or remove any files. All ope
    - Exclude: Utility directories like `scripts/`
    - Identify type (documentation, source code, tools, local docs)
 
-2. Catalog existing INDEX.csv files
+2. Catalog existing index.csv files
 
-   - Root level INDEX.csv
-   - All child INDEX.csv files
-   - Use `fd --type f --hidden --no-ignore 'INDEX.csv'`
+   - Root level index.csv
+   - All child index.csv files
+   - Use `fd --type f --hidden --no-ignore 'index.csv'`
 
-3. Compare discoveries against root INDEX.csv
+3. Compare discoveries against root index.csv
 
    - Identify missing entries
    - Identify orphaned entries
 
-### Child INDEX.csv Management
+### Child index.csv Management
 
 For each source (git repository or local directory):
 
@@ -89,7 +89,7 @@ For each source (git repository or local directory):
      - Tools: `directory,area,description,path,topics`
      - Local docs: `directory,file,description,topics`
    - Use whatever column structure best represents the content
-   - Avoid any date last updated type fields, these are in the root INDEX.csv file
+   - Avoid any date last updated type fields, these are in the root index.csv file
    - Avoid count fields to reduce unnecessary update churn
 
 3. Determine what to index (token efficiency principle)
@@ -108,40 +108,40 @@ For each source (git repository or local directory):
      - Development tooling
    - Goal: Minimize token usage while maximizing reference value
 
-4. Generate/update INDEX.csv
+4. Generate/update index.csv
 
    - Create or update with appropriate schema
    - Extract metadata from README, directory names, or file headers
    - Use relative paths from source root
    - Index only high-value reference content
 
-### Root INDEX.csv Update
+### Root index.csv Update
 
-IMPORTANT: The root INDEX.csv MUST only contain child directories, NOT root-level documents. Do not include ENVIRONMENT.md, project.md, README.md, ROLE.md, or any other root-level files in the root INDEX.csv.
+IMPORTANT: The root index.csv MUST only contain child directories, NOT root-level documents. Do not include environment.md, project.md, README.md, role.md, or any other root-level files in the root index.csv.
 
-1. Read current root INDEX.csv
+1. Read current root index.csv
 2. Validate each entry against filesystem
 3. Add new entries for discovered child directories only (repositories and local directories like docs/)
-4. Exclude all root-level files from the root INDEX.csv
+4. Exclude all root-level files from the root index.csv
 5. Update fields:
    - `last_updated`: Current date (YYYY-MM-DD)
    - `topics`: Synchronized with content
-6. Write updated root INDEX.csv
+6. Write updated root index.csv
 
 ### Validation
 
 1. Verify CSV integrity
-2. Test that paths in INDEX.csv files are valid
+2. Test that paths in index.csv files are valid
 3. Cross-reference root and child indexes
 4. Document any anomalies
 
 ## Success Criteria
 
 - All git repositories and significant local directories discovered and catalogued
-- Each source has an appropriate child INDEX.csv (schema fits the content)
-- Root INDEX.csv accurately reflects all child directories (NOT root-level files)
-- All INDEX.csv files are valid CSV format
-- Last updated dates reflect refresh date (only root level INDEX.csv)
+- Each source has an appropriate child index.csv (schema fits the content)
+- Root index.csv accurately reflects all child directories (NOT root-level files)
+- All index.csv files are valid CSV format
+- Last updated dates reflect refresh date (only root level index.csv)
 - Topics are meaningful and well-organized
 - NO FILES DELETED - All operations are non-destructive
 
@@ -157,7 +157,7 @@ This context directory may contain:
 - Configuration repositories: Reference configurations (git)
 - Local documentation directories: Maintained markdown files (local, e.g., `docs/`)
 
-Each type may benefit from a different INDEX.csv schema. Note that `scripts/` and similar utility directories should be excluded from indexing.
+Each type may benefit from a different index.csv schema. Note that `scripts/` and similar utility directories should be excluded from indexing.
 
 ### Date Format
 
@@ -173,12 +173,12 @@ Always use ISO 8601 format: `YYYY-MM-DD`
 ### Path References
 
 - Always use relative paths
-- Relative to source root (repository or directory) for child INDEX.csv
-- Relative to context directory root for root INDEX.csv
+- Relative to source root (repository or directory) for child index.csv
+- Relative to context directory root for root index.csv
 
-### Root INDEX.csv Scope
+### Root index.csv Scope
 
-CRITICAL RULE: The root INDEX.csv file catalogs ONLY child directories (subdirectories within ~/context/), NOT root-level files.
+CRITICAL RULE: The root index.csv file catalogs ONLY child directories (subdirectories within ~/context/), NOT root-level files.
 
 Include:
 
@@ -187,17 +187,17 @@ Include:
 
 Exclude:
 
-- All root-level markdown files: ENVIRONMENT.md, project.md, AGENTS.md, README.md, ROLE.md
+- All root-level markdown files: environment.md, project.md, AGENTS.md, README.md, role.md
 - The scripts directory
 - Script files: update-docs, update-repos, update-references
 - Hidden files and directories: .git, .gitignore
 
-Root-level documentation files are important but should NOT appear in the root INDEX.csv. They are discovered and read directly by AI agents as part of session initialization.
+Root-level documentation files are important but should NOT appear in the root index.csv. They are discovered and read directly by AI agents as part of session initialization.
 
 ## Related Documentation
 
 - [AGENTS.md](AGENTS.md) - AI agent context for reference repository
 - [README.md](README.md) - Human-readable repository overview
-- [ROLE.md](ROLE.md) - AI agent role definition
-- [ENVIRONMENT.md](ENVIRONMENT.md) - User and system environment configuration
+- [role.md](role.md) - AI agent role definition
+- [environment.md](environment.md) - User and system environment configuration
 - [docs/source.md](docs/source.md) - External documentation sources and setup

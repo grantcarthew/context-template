@@ -1,6 +1,6 @@
-# Ignore INDEX.csv files (branch-specific)
-/INDEX.csv
-docs/INDEX.csv
+# Ignore index.csv files (branch-specific)
+/index.csv
+docs/index.csv
 
 # Ignore subdirectories
 */

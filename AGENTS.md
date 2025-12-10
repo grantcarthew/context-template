@@ -12,32 +12,32 @@ This is a local documentation repository that maintains cloned copies of frequen
   - Local documentation
 - Optimized for AI agent consumption
 - Maintained via automated update scripts
-- Indexed via CSV for quick discovery (INDEX.csv)
+- Indexed via CSV for quick discovery (index.csv)
 
 ## Repository Structure
 
 ```txt
 ~/context/
-├── INDEX.csv           # Branch-specific child directories index (.gitignored)
+├── index.csv           # Branch-specific child directories index (.gitignored)
 ├── README.md           # Human-readable repository guide
-├── ROLE.md             # AI agent role definition
 ├── AGENTS.md           # This file - AI agent instructions
+├── role.md             # AI agent role definition
 ├── project.md          # Reference repository maintenance project
-├── ENVIRONMENT.md      # User and system environment configuration
+├── environment.md      # User and system environment configuration
 ├── update-references   # Main update script
 ├── .gitignore          # Git ignore rules
 ├── docs/               # Local context documentation (tracked)
-│   ├── INDEX.csv       # Index of context documentation (.gitignored)
+│   ├── index.csv       # Index of context documentation (.gitignored)
 │   ├── source.md       # External documentation sources (synced across branches)
 │   └── [doc-file].md   # Other branch-specific local documentation files
 ├── scripts/            # Utility scripts (synced across branches)
 │   ├── update-docs     # Update all git repositories
 │   └── update-repos    # Update repository indexes
 └── [child-dirs]/       # Branch-specific documentation repositories
-    └── INDEX.csv       # Each child has its own INDEX.csv
+    └── index.csv       # Each child has its own index.csv
 ```
 
-**Note**: The root INDEX.csv and specific child directories vary by branch. Read INDEX.csv to discover available documentation sources for the current branch.
+**Note**: The root index.csv and specific child directories vary by branch. Read index.csv to discover available documentation sources for the current branch.
 
 ## Adding New Documentation Source
 
@@ -56,16 +56,16 @@ cd [directory-name]
 git sparse-checkout set [path-to-docs]
 ```
 
-### Update INDEX.csv
+### Update index.csv
 
-After adding a new documentation source, update the INDEX.csv file:
+After adding a new documentation source, update the index.csv file:
 
 ```csv
 directory,description,topics,source_url,source_type,last_updated
 [dir-name],[description],[topic1;topic2;topic3],[url],[type],[YYYY-MM-DD]
 ```
 
-**CSV Field Definitions** (for root INDEX.csv):
+**CSV Field Definitions** (for root index.csv):
 
 - `directory`: Name of child directory only - NEVER root-level files
 - `description`: Brief description of the documentation content
@@ -78,11 +78,11 @@ directory,description,topics,source_url,source_type,last_updated
   - `local-docs`: Local directory maintained in this repository
 - `last_updated`: Date in YYYY-MM-DD format
 
-**CRITICAL**: Root INDEX.csv lists child directories ONLY. Root-level files (ENVIRONMENT.md, project.md, etc.) are NOT included.
+**CRITICAL**: Root index.csv lists child directories ONLY. Root-level files (environment.md, project.md, etc.) are NOT included.
 
-**IMPORTANT**: The root INDEX.csv catalogs ONLY child directories, NOT root-level files. Root-level documentation (ENVIRONMENT.md, project.md, AGENTS.md, README.md, ROLE.md) is NOT indexed in the root INDEX.csv but is read directly by agents during session initialization. Child directories vary by branch.
+**IMPORTANT**: The root index.csv catalogs ONLY child directories, NOT root-level files. Root-level documentation (environment.md, project.md, AGENTS.md, README.md, role.md) is NOT indexed in the root index.csv but is read directly by agents during session initialization. Child directories vary by branch.
 
-Subdirectories have their own INDEX.csv for detailed navigation. Read the root INDEX.csv to discover available child directory indexes for the current branch.
+Subdirectories have their own index.csv for detailed navigation. Read the root index.csv to discover available child directory indexes for the current branch.
 
 ## Maintenance Commands
 
@@ -118,16 +118,16 @@ git log -1
 
 ### Finding Documentation
 
-**Best Practice for AI Agents**: Read INDEX.csv files directly using the Read tool (most token-efficient approach).
+**Best Practice for AI Agents**: Read index.csv files directly using the Read tool (most token-efficient approach).
 
 **Quick topic search using Ripgrep on indexes**:
 
 ```bash
-# Search all INDEX.csv files for a topic
-rg -i "[topic]" ~/context/*/INDEX.csv
+# Search all index.csv files for a topic
+rg -i "[topic]" ~/context/*/index.csv
 
 # Search main index for keywords
-rg "[keyword1]|[keyword2]" ~/context/INDEX.csv
+rg "[keyword1]|[keyword2]" ~/context/index.csv
 ```
 
 **Full-text search across all documentation**:
@@ -151,8 +151,8 @@ fd --hidden --no-ignore "pattern" ~/context/
 
 **Recommended workflow for agents**:
 
-1. Read `~/context/INDEX.csv` to identify relevant directory
-2. Read the child directory's INDEX.csv for detailed navigation (e.g., `[directory-name]/INDEX.csv`)
+1. Read `~/context/index.csv` to identify relevant directory
+2. Read the child directory's index.csv for detailed navigation (e.g., `[directory-name]/index.csv`)
 3. Navigate directly to the documentation file using the path from the index
 
 ## Code Style Guidelines
@@ -181,8 +181,8 @@ fd --hidden --no-ignore "pattern" ~/context/
 
 ## File Naming Conventions
 
-- **Root-level metadata**: UPPERCASE (e.g., `README.md`, `AGENTS.md`, `ROLE.md`, `INDEX.csv`)
-- **Critical AI configuration**: UPPERCASE (e.g., `ENVIRONMENT.md`)
+- **Root-level metadata**: UPPERCASE for README.md and AGENTS.md only
+- **Other root-level files**: lowercase (e.g., `role.md`, `project.md`, `environment.md`, `index.csv`)
 - **Regular documentation**: lowercase with hyphens (e.g., `github.md`, `source.md`)
 - **Scripts**: lowercase, no extension (e.g., `update-docs`)
 - **Directories**: lowercase, descriptive names matching source
@@ -203,7 +203,7 @@ Prefer these tools when working with the repository:
 
 - Git repositories use shallow clones (--depth=1) to minimize disk usage
 - Some repositories use sparse checkouts (only specific paths)
-- INDEX.csv serves as the single source of truth for documentation sources
+- index.csv serves as the single source of truth for documentation sources
 
 ## Common Tasks for AI Agents
 
@@ -211,8 +211,8 @@ Prefer these tools when working with the repository:
 
 **Example workflow**:
 
-1. Read `~/context/INDEX.csv` to identify relevant child directory
-2. Read `~/context/[directory-name]/INDEX.csv` for detailed navigation
+1. Read `~/context/index.csv` to identify relevant child directory
+2. Read `~/context/[directory-name]/index.csv` for detailed navigation
 3. Locate the specific documentation section or file path
 4. Navigate directly to the documentation file
 
@@ -222,24 +222,24 @@ Prefer these tools when working with the repository:
 
 **Reading user context**:
 
-1. Read `~/context/ENVIRONMENT.md` for user preferences, OS, tools
-2. Read `~/context/docs/INDEX.csv` to discover available local documentation
+1. Read `~/context/environment.md` for user preferences, OS, tools
+2. Read `~/context/docs/index.csv` to discover available local documentation
 3. Read relevant docs files based on current task requirements
 
 ### Task 3: Verify Documentation Currency
 
-1. Check `last_updated` field in INDEX.csv
+1. Check `last_updated` field in index.csv
 2. Optionally run `update-references` to refresh all sources
 3. Verify git log for recent changes: `git log -1 --format="%ai %s"`
 
 ### Task 4: Add New Documentation Source
 
 1. Clone repository (standard or sparse checkout as needed)
-2. Create directory-level INDEX.csv if documentation is extensive
+2. Create directory-level index.csv if documentation is extensive
    - **See project.md** for indexing philosophy: only include content that helps LLMs understand how to USE the tool
    - Exclude contributor-focused content (CONTRIBUTING, CODE_OF_CONDUCT, CI/CD configs, test infrastructure)
    - Goal: minimize tokens while maximizing reference value
-3. Update main INDEX.csv with new entry
+3. Update main index.csv with new entry
 4. Test that update-references script works with new repository
 
 ### Task 5: Search Across Multiple Sources
@@ -260,16 +260,16 @@ Prefer these tools when working with the repository:
 
 ## Troubleshooting
 
-### INDEX.csv Out of Sync
+### index.csv Out of Sync
 
-**Symptom**: INDEX.csv doesn't match actual directories
+**Symptom**: index.csv doesn't match actual directories
 
 **Resolution**:
 
 1. List actual directories: `lsd --tree --depth <n> ~/context/`
-2. Compare with INDEX.csv entries
-3. Update INDEX.csv manually or remove obsolete entries
-4. Verify the INDEX.csv file
+2. Compare with index.csv entries
+3. Update index.csv manually or remove obsolete entries
+4. Verify the index.csv file
 
 ### Can't Find Expected Documentation
 
@@ -278,7 +278,7 @@ Prefer these tools when working with the repository:
 **Resolution**:
 
 1. Check if repository exists: `lsd ~/context/`
-2. Verify INDEX.csv for source information
+2. Verify index.csv for source information
 3. Check if sparse checkout excludes needed paths
 4. Run update-references to ensure repositories are current
 5. Try broader search terms or different grep patterns
@@ -289,16 +289,16 @@ Prefer these tools when working with the repository:
 
 - [README.md](README.md) - Human-readable repository overview
 - [AGENTS.md](AGENTS.md) - README for AI agents
-- [ROLE.md](ROLE.md) - AI agent role definition for documentation architecture
-- [INDEX.csv](INDEX.csv) - Master inventory of all documentation sources
+- [role.md](role.md) - AI agent role definition for documentation architecture
+- [index.csv](index.csv) - Master inventory of all documentation sources
 
 ### Local Documentation
 
-- [ENVIRONMENT.md](ENVIRONMENT.md) - User and system environment configuration
+- [environment.md](environment.md) - User and system environment configuration
 - [docs/source.md](docs/source.md) - External documentation sources and setup instructions
-- [docs/INDEX.csv](docs/INDEX.csv) - Index of local context documentation (branch-specific)
-- Additional docs files vary by branch - see docs/INDEX.csv
+- [docs/index.csv](docs/index.csv) - Index of local context documentation (branch-specific)
+- Additional docs files vary by branch - see docs/index.csv
 
 ### External Documentation Indexes
 
-- Child directory indexes vary by branch - see root INDEX.csv for available sources
+- Child directory indexes vary by branch - see root index.csv for available sources
