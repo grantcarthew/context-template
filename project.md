@@ -196,7 +196,7 @@ Root-level documentation files are important but should NOT appear in the root i
 
 ## Related Documentation
 
-- [AGENTS.md](AGENTS.md) - AI agent context for reference repository
+- [AGENTS.md](AGENTS.md) - AI agent context for context repository
 - [README.md](README.md) - Human-readable repository overview
 - [role.md](role.md) - AI agent role definition
 - [environment.md](environment.md) - User and system environment configuration
